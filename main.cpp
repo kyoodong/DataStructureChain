@@ -116,6 +116,9 @@ void Chain<T>::InsertBack(const T& element) {
 
 template <typename T>
 void Chain<T>::Insert(const T& element, const unsigned at) {
+    if (at >= size)
+        throw size;
+
     ChainNode<T>* node = GetNode(at);
     ChainNode<T>* newNode = new ChainNode<T>(element);
     newNode->link = node->link;
