@@ -17,10 +17,6 @@ public:
     operator int () {
         return num;
     }
-
-    void ShowNumber() {
-        std::cout << num << std::endl;
-    }
 };
 
 template <class T>
@@ -28,7 +24,7 @@ class ChainNode {
     friend class Chain<T>;
 public:
     ChainNode() : link(NULL){}
-    ChainNode(T data) : data(data), link(NULL){}
+    ChainNode(const T& data) : data(data), link(NULL){}
     ~ChainNode();
 
 private:
@@ -199,16 +195,15 @@ typename Chain<T>::Iterator Chain<T>::end() const {
 
 template <typename T>
 typename Chain<T>::Iterator Chain<T>::Iterator::operator++() {
-    Iterator it = *this;
-//    *this = *node->link;
-    this = node->link;
-    return it;
+    node = node->link;
+    return *this;
 }
 
 template <typename T>
 typename Chain<T>::Iterator Chain<T>::Iterator::operator++(int mark) {
+    Iterator it = *this;
     node = node->link;
-    return *this;
+    return it;
 }
 
 template <typename T>
@@ -234,7 +229,7 @@ void Chain<T>::Iterator::operator=(const Iterator& it) {
 int main() {
     Chain<Number> chain;
     for (int i = 1; i <= 9; i++) {
-        chain.InsertBack(i);
+        chain.InsertBack(Number(i));
     }
 
     std::cout << "1 ~ 9까지 수 입력" << std::endl;
