@@ -140,6 +140,9 @@ T Chain<T>::Get(unsigned at) const {
 
 template <typename T>
 void Chain<T>::EraseFront() {
+    if (size == 0)
+        throw size;
+
     ChainNode<T>* node = GetNode(0);
     ChainNode<T>* next = node->link;
 
@@ -150,11 +153,22 @@ void Chain<T>::EraseFront() {
 
 template <typename T>
 void Chain<T>::EraseBack() {
+    if (size == 0)
+        throw size;
+
     Erase(size - 1);
 }
 
 template <typename T>
 void Chain<T>::Erase(unsigned at) {
+    if (at >= size)
+        throw size;
+
+    if (at == 0) {
+        EraseFront();
+        return;
+    }
+
     ChainNode<T>* prev = GetNode(at - 1);
     ChainNode<T>* node = prev->link;
 
